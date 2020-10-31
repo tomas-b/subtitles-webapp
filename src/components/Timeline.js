@@ -109,7 +109,21 @@ const Timeline = props => {
         props.edit(result)
     }
 
-    const editSubtitlePanel = (a,b,c)=>{}
+    const editSubtitlePanel = (id, value, action) => {
+
+        let subs = [...props.subtitles]
+        let data = {...props.subtitles[id].data}
+
+        if(action=='start') data.start = value
+        if(action=='end') data.end = value
+        // if(action=='delete') slice
+        // if(action=='add') add_next + focus
+        // reconsiliate
+
+        subs[id].data = data
+        props.edit(subs)
+
+    }
     
     const windowingBoxes = ()=>{
 
@@ -211,6 +225,7 @@ const SidePanel = React.memo(props => {
     if(props.data == null) return(<div className='side-panel'></div>)
 
     const handleEdit = (k, v = null) => {
+        props.edit(k,v)
     }
 
 
