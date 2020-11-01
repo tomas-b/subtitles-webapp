@@ -124,7 +124,10 @@ const Timeline = props => {
             subs[id].data = data
         }
 
-        if(action=='delete') subs.splice(id, 1)
+        if(action=='delete') {
+            if(subs.length == id+1) props.select(id-1, false)
+            subs.splice(id, 1)
+        }
         if(action=='add') {
             let newSub = {text:''}
             newSub.start = data.end + 10
