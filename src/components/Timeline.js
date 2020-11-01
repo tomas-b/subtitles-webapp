@@ -91,7 +91,6 @@ const Timeline = props => {
     }
 
     const reconsiliateOrder = k => {
-        console.log(`---->${k}`)
         let subs = [...props.subtitles]
         //subs.sort((a,b)=>a.data.start>b.data.start)
         let mapped = subs.map((sub, i)=>{return {index: i, sub: sub}})
@@ -134,6 +133,7 @@ const Timeline = props => {
             newSub.end = props.subtitles[id+1]?.data.start
             newSub.end = newSub.end ? newSub.end -10 : newSub.start + 1000
             subs.splice(id, 0, {type:'cue', data: newSub})
+            props.select(id, false)
         }
 
         props.edit(subs)
@@ -161,7 +161,7 @@ const Timeline = props => {
                 width={width}
                 selected={ k == props.sID }
                 select={()=>props.select(k, false)}
-                reconsiliateOrder={()=>{reconsiliateOrder(k)}}
+                reconsiliateOrder={()=>{reconsiliateOrder(props.sID)}}
             />)
         }
         return boxes
