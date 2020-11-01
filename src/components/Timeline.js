@@ -114,13 +114,25 @@ const Timeline = props => {
         let subs = [...props.subtitles]
         let data = {...props.subtitles[id].data}
 
-        if(action=='start') data.start = value
-        if(action=='end') data.end = value
-        // if(action=='delete') slice
-        // if(action=='add') add_next + focus
-        // reconsiliate
+        if(action=='start') {
+            data.start = value
+            subs[id].data = data
+        }
 
-        subs[id].data = data
+        if(action=='end') {
+            data.end = value
+            subs[id].data = data
+        }
+
+        if(action=='delete') subs.splice(id, 1)
+        if(action=='add') {
+            let newSub = {text:''}
+            newSub.start = data.end + 10
+            newSub.end = props.subtitles[id+1]?.data.start
+            newSub.end = newSub.end ? newSub.end -10 : newSub.start + 1000
+            subs.splice(id, 0, {type:'cue', data: newSub})
+        }
+
         props.edit(subs)
 
     }
