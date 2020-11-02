@@ -102,6 +102,45 @@ input, textarea {
 .side-panel {
     grid-area: details;
     background:#1A1A1A;
+    text-align: center;
+    padding:10px
+}
+
+.side-panel .controls {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  grid-template-rows: 1fr 1fr;
+  gap: 0;
+  grid-template-areas:
+    "prev start next"
+    "prev end next"; 
+}
+
+.side-panel button {
+    margin:5px;
+    padding:6px;
+    border: 1px solid red;
+    color:red;
+    background-color: #111;
+    transition: .5s color;
+}
+
+.side-panel button:hover { color:white; cursor:pointer }
+.side-panel button:active { border-color:white }
+
+.side-panel .controls button {
+    padding:0 6px;
+    margin:0 1px;
+}
+
+.side-panel .controls .prev { grid-area: prev }
+.side-panel .controls .start { grid-area: start }
+.side-panel .controls .end { grid-area: end }
+.side-panel .controls .next { grid-area: next }
+
+.side-panel .deleteBtn {
+    background: red;
+    color: black;
 }
 
 .bar {
@@ -255,7 +294,7 @@ input, textarea {
 .box .text { margin: 5px }
 
 .box.selected {
-    transition:1s background;
+    transition:.5s background;
     background:rgba(255,0,0,.5);
 }
 

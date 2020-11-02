@@ -246,15 +246,15 @@ const SidePanel = React.memo(props => {
 
     return(
         <div className='side-panel'>
-            <input onChange={e=>handleEdit('start', inputToMs(e.target.value))} type='time' value={msToInput(props.data.start)} required="required"/>
-            <input onChange={e=>handleEdit('end', inputToMs(e.target.value))} type='time' value={msToInput(props.data.end)} required="required"/>
+            <div className='controls'>
+            <button className='prev' onClick={props.prev}>⬅</button>
+            <input className='start' onChange={e=>handleEdit('start', inputToMs(e.target.value))} type='time' value={msToInput(props.data.start)} required="required"/>
+            <input className='end' onChange={e=>handleEdit('end', inputToMs(e.target.value))} type='time' value={msToInput(props.data.end)} required="required"/>
+            <button className='next' onClick={props.next}>➡</button>
+            </div>
             <br/>
-            <button onClick={props.prev}>prev</button>
-            <button onClick={props.next}>next</button>
-            <br/>
-            <button onClick={()=>handleEdit('delete')} >delete</button>
-            <button onClick={()=>handleEdit('add')} >add</button>
-            <br/>
+            <button className='deleteBtn' onClick={()=>handleEdit('delete')} >🞮 delete</button>
+            <button onClick={()=>handleEdit('add')} >🞧 add</button>
         </div>
     )
 })
