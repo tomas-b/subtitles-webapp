@@ -42,12 +42,35 @@ function App(){
         setSelectedId(id)
     }
 
+    const saveStr = videoFileName => {
+       
+        let strText = stringifySync( subtitles, {format:'str'} );
+        let strBlob = new Blob([strText], {type: 'text/plain'});
+
+        let downloadLink = document.createElement('a');
+        downloadLink.download = (videoFileName ? videoFileName : 'subtitle') + '.str';
+        downloadLink.innerHTML = 'Download File';
+        if ('webkitURL' in window) {
+          downloadLink.href = window.webkitURL.createObjectURL(strBlob);
+          downloadLink.click();
+        } else {
+          downloadLink.href = window.URL.createObjectURL(strBlob);
+          downloadLink.style.display = 'none';
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+          document.body.removeCHild(downloadLink);
+        }
+
+
+    }
+
     return (
         <div className='grid-container'>
         <Header
             loadSubtitles={loadSubtitles}
             loadVideo={loadVideo}
             saveWavePoints={saveWavePoints}
+            handleSave={saveStr}
         />
         <ListEditor
             edit={editSubtitles}

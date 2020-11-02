@@ -253,7 +253,7 @@ const SidePanel = React.memo(props => {
             <button className='next' onClick={props.next}>➡</button>
             </div>
             <br/>
-            <button className='deleteBtn' onClick={()=>handleEdit('delete')} >🞮 delete</button>
+            <button className='specialBtn' onClick={()=>handleEdit('delete')} >🞮 delete</button>
             <button onClick={()=>handleEdit('add')} >🞧 add</button>
         </div>
     )

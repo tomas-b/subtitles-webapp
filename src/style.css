@@ -138,10 +138,13 @@ input, textarea {
 .side-panel .controls .end { grid-area: end }
 .side-panel .controls .next { grid-area: next }
 
-.side-panel .deleteBtn {
-    background: red;
-    color: black;
+.specialBtn {
+    border: none !important;
+    background: rgb(255, 0, 0) !important;
+    box-shadow: 0 0 3px 2px black !important;
+    color: black !important
 }
+.specialBtn:hover { color:white !important }
 
 .bar {
     grid-area: bar;

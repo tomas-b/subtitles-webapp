@@ -1,8 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const Header = props => {
 
+    let [vidFileName, setVidFileName] = useState(null)
+
     const handleVideo = (e)=>{
+
+        setVidFileName(e.target.files[0].name)
 
         // video URI
         let URI = URL.createObjectURL( e.target.files[0] )
@@ -63,6 +67,10 @@ const Header = props => {
             <li>
             <input onChange={handleSubtitles} type='file' id='subs_file' name='subs_file'/>
             <label htmlFor='subs_file'>Choose Subtitle</label>
+            </li>
+            <li>
+            <input id='save_str' onClick={()=>props.handleSave(vidFileName)}/>
+            <label class='specialBtn' htmlFor='save_str'>Save as .STR</label>
             </li>
         </ul>
         <a className='github' target='_blank' href="http://github.com/tomas-b">
