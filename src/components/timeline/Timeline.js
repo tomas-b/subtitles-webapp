@@ -106,6 +106,13 @@ const Timeline = props => {
     const editSubtitlePanel = (id, value, action) => {
 
         let subs = [...props.subtitles]
+
+        if (action=='add' && subs.length == 0) {
+            props.edit([{type:'cue', data:{ start:10, end:2000, text:'' }}])
+            props.select(0, false)
+            return;
+        }
+
         let data = {...props.subtitles[id].data}
 
         if(action=='start') {
@@ -126,7 +133,7 @@ const Timeline = props => {
             let newSub = {text:''}
             newSub.start = data.end + 10
             newSub.end = props.subtitles[id+1]?.data.start
-            newSub.end = newSub.end ? newSub.end -10 : newSub.start + 1000
+            newSub.end = newSub.end ? newSub.end -10 : newSub.start + 1500
             subs.splice(id, 0, {type:'cue', data: newSub})
             props.select(id, false)
         }
@@ -169,6 +176,7 @@ const Timeline = props => {
             edit={(action, data)=>{editSubtitlePanel(props.sID, data, action)}}
             prev={()=>{ return props.sID > 0 ? props.select(props.sID-1, true) : null}}
             next={()=>{ return props.sID < (props.subtitles.length-1) ? props.select(props.sID+1, true) : null}}
+            timelineActive={timelineWidth>0}
         />
         <div className="bar">
             <input onChange={handleZoom} type='range' id='zoom' defaultValue='4' min='2' max='12'/> 

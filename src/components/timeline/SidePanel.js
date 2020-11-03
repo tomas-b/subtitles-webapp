@@ -5,12 +5,19 @@ const inputToMs = time => (new Date(`1970-01-01T${time}Z`)).getTime()
 
 const SidePanel = props => {
 
-    if(props.data == null) return(<div className='side-panel'></div>)
+    console.log(props.timelineActive)
+
+    if(!props.timelineActive) return(<div className='side-panel'></div>)
 
     const handleEdit = (k, v = null) => {
         props.edit(k,v)
     }
 
+    if(props.data == null) return (
+        <div className='side-panel'>
+            <button onClick={()=>handleEdit('add')} >🞧 add</button>
+        </div>
+    )
 
     return(
         <div className='side-panel'>
