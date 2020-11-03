@@ -72,12 +72,13 @@ const Timeline = props => {
     const editSubtitleBox = (id, type, px, offset)=>{
 
         let data = {...props.subtitles[id].data}
-        let px2ms = Math.max(0, Math.round((px-offset) / timelineWidth * videoDuration))
+        let px2ms = Math.max(0, Math.round(px / timelineWidth * videoDuration))
 
         if(type=='left') data.start = Math.round(Math.min(data.end-1, px2ms))
         if(type=='right') data.end = Math.round(Math.min(Math.max(data.start+1, px2ms), videoDuration))
 
         if(type=='text' || type.match('box')) {
+            px2ms = Math.max(0, Math.round((px-offset) / timelineWidth * videoDuration))
             let width = data.end - data.start
             data.start = Math.round(Math.max(0, px2ms))
             data.end = Math.round(data.start + width)
