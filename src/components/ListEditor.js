@@ -31,7 +31,7 @@ const ListEditor = props => {
             <textarea
                 col='1'
                 id='subtitle-text'
-                placeholder='line text...'
+                placeholder='...'
                 onChange={e=>editLine(e.target.value)}
                 value={ props.sID!==null ? props.subtitles[props.sID].data.text  : '' }
             ></textarea>
