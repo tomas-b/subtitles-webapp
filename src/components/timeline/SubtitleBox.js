@@ -1,10 +1,11 @@
 import React, { useState, useEffect} from 'react'
 
-const msToInput = ms   => (new Date(ms)).toISOString().slice(11,-1)
+const msToInput = ms => (new Date(ms)).toISOString().slice(11,-1)
 
 const SubtitleBox = props => {
 
     let [drag, setDrag] = useState(false)
+    let [dragOffset, setDragOffset] = useState(0)
 
     let style = {
         left:  `${props.start}px`,
@@ -13,7 +14,7 @@ const SubtitleBox = props => {
 
     const mousemoveHandler = e => {
         let mousePositionInBoxes = e.clientX - document.querySelector('#boxes').getBoundingClientRect().x
-        props.edit(drag, mousePositionInBoxes)
+        props.edit(drag, mousePositionInBoxes, dragOffset)
     }
 
     const mouseupHandler = e => {
@@ -33,9 +34,16 @@ const SubtitleBox = props => {
         }
     }, [drag])
 
+    const mousedownHandler = e => {
+        let offset = e.clientX - e.target.closest('.box').getBoundingClientRect().x
+        props.select();
+        setDragOffset(offset)
+        setDrag(e.target.className)
+    }
+
     return(
         <div className={`box ${props.selected?'selected':''}`}
-            onMouseDown={(e)=>{props.select();setDrag(e.target.className)}}
+            onMouseDown={mousedownHandler}
             style={style}
         >
         <div className='left'></div>
