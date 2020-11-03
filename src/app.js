@@ -4,7 +4,7 @@ import { parseSync, stringifySync } from 'subtitle'
 import Header       from './components/Header'
 import ListEditor   from './components/ListEditor'
 import Video        from './components/Video'
-import Timeline     from './components/Timeline'
+import Timeline     from './components/timeline/Timeline'
 import './style.css'
 
 function App(){

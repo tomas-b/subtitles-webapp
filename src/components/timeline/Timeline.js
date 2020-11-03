@@ -1,7 +1,6 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
-
-const msToInput = ms   => (new Date(ms)).toISOString().slice(11,-1)
-const inputToMs = time => (new Date(`1970-01-01T${time}Z`)).getTime()
+import React, { useState, useRef, useEffect } from 'react'
+import SubtitleBox from './SubtitleBox'
+import SidePanel from './SidePanel'
 
 const Timeline = props => {
 
@@ -97,14 +96,10 @@ const Timeline = props => {
         mapped.sort( (a,b) => a.sub.data.start > b.sub.data.start )
         let newId = props.sID
         let result = mapped.map((s, i)=>{
-            console.log(s)
-            console.log(`${s.index} === ${k} --. ${i}`);
             if (s.index == k) newId = i;
             return subs[s.index];
         })
-        console.log(`new selected: ${newId}`)
         props.select(newId, false)
-        console.log(`/new selected: ${newId}`)
         props.edit(result)
     }
 
@@ -187,76 +182,5 @@ const Timeline = props => {
     </div>
     )
 }
-
-
-const SubtitleBox = props => {
-
-    let [drag, setDrag] = useState(false)
-
-    let style = {
-        left:  `${props.start}px`,
-        width: `${props.width}px`,
-    }
-
-    const mousemoveHandler = e => {
-        let mousePositionInBoxes = e.clientX - document.querySelector('#boxes').getBoundingClientRect().x
-        props.edit(drag, mousePositionInBoxes)
-    }
-
-    const mouseupHandler = e => {
-        setDrag(false)
-    }
-
-    useEffect(()=>{
-            if(!drag) {
-                console.log('calling from effect')
-                props.reconsiliateOrder();
-                return;
-            }
-            window.addEventListener('mousemove', mousemoveHandler, false)
-            window.addEventListener('mouseup', mouseupHandler, false)
-        return ()=>{
-            window.removeEventListener('mousemove', mousemoveHandler)
-            window.removeEventListener('mouseup', mouseupHandler)
-        }
-    }, [drag])
-
-    return(
-        <div className={`box ${props.selected?'selected':''}`}
-            onMouseDown={(e)=>{props.select();setDrag(e.target.className)}}
-            style={style}
-        >
-        <div className='left'></div>
-        <div className='text'>   {props.data.text}
-        <div className='timestp'>{msToInput(props.data.start)} → {msToInput(props.data.end)}</div>
-        </div>
-        <div className='right'></div>
-        </div>
-    )
-}
-
-const SidePanel = React.memo(props => {
-
-    if(props.data == null) return(<div className='side-panel'></div>)
-
-    const handleEdit = (k, v = null) => {
-        props.edit(k,v)
-    }
-
-
-    return(
-        <div className='side-panel'>
-            <div className='controls'>
-            <button className='prev' onClick={props.prev}>⬅</button>
-            <input className='start' onChange={e=>handleEdit('start', inputToMs(e.target.value))} type='time' value={msToInput(props.data.start)} required="required"/>
-            <input className='end' onChange={e=>handleEdit('end', inputToMs(e.target.value))} type='time' value={msToInput(props.data.end)} required="required"/>
-            <button className='next' onClick={props.next}>➡</button>
-            </div>
-            <br/>
-            <button className='specialBtn' onClick={()=>handleEdit('delete')} >🞮 delete</button>
-            <button onClick={()=>handleEdit('add')} >🞧 add</button>
-        </div>
-    )
-})
 
 export default Timeline
