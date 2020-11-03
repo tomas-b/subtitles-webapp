@@ -124,7 +124,7 @@ const Timeline = props => {
         }
 
         if(action=='delete') {
-            if(subs.length == id+1) props.select(id-1, false)
+            if(subs.length == id+1) props.select((subs.length == 1 ? null : id-1), false)
             subs.splice(id, 1)
         }
         if(action=='add') {

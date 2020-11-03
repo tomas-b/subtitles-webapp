@@ -70,7 +70,7 @@ const Header = props => {
             </li>
             <li>
             <input id='save_str' onClick={()=>props.handleSave(vidFileName)}/>
-            <label class='specialBtn' htmlFor='save_str'>Save as .STR</label>
+            <label className='specialBtn' htmlFor='save_str'>Save as .STR</label>
             </li>
         </ul>
         <a className='github' target='_blank' href="http://github.com/tomas-b">
