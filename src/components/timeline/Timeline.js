@@ -43,7 +43,7 @@ const Timeline = props => {
             cvWrapperRef.current.removeEventListener('scroll', windowScroll)
         }
 
-    },[video])
+    },[video?.getAttribute('src')])
 
     const svgWave = ()=>{
         let points = ''

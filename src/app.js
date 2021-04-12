@@ -6,6 +6,8 @@ import ListEditor   from './components/ListEditor'
 import Video        from './components/Video'
 import Timeline     from './components/timeline/Timeline'
 import './style.css'
+import totalIndiferenciaMp4 from '../demo_files/total_indiferencia.mp4'
+import totalIndiferenciaSTR from '../demo_files/subtitle.str'
 
 function App(){
 
@@ -25,8 +27,42 @@ function App(){
         setSubtitles( subs )
     }
 
-    const loadVideo = videoURI => {
-        vidRef.current.setAttribute('src', videoURI)
+    const loadVideo = file => {
+
+        let URI = URL.createObjectURL( file );
+        vidRef.current.setAttribute('src', URI)
+
+        // Wave
+        let vidReader = new FileReader()
+        vidReader.onload = () => {
+
+            let audioContext = new AudioContext()
+
+            audioContext.decodeAudioData(vidReader.result)
+            .then( decodedAudioData => {
+
+                let sampleRate = 8000
+                let offlineAudioContext = new OfflineAudioContext(1, sampleRate * decodedAudioData.duration, sampleRate);
+                let soundSource = offlineAudioContext.createBufferSource();
+
+                soundSource.buffer = decodedAudioData;
+                soundSource.connect(offlineAudioContext.destination);
+                soundSource.start();
+
+                offlineAudioContext.startRendering()
+                .then((renderedBuffer)=>{
+                    saveWavePoints(renderedBuffer.getChannelData(0), 250);
+                })
+                .catch((err)=>{
+                    console.log('Rendering failed: ' + err)
+                })
+
+            })
+
+        }
+
+        vidReader.readAsArrayBuffer( file )
+
     }
 
     const saveWavePoints = (leftChannel, step) => {
@@ -38,7 +74,6 @@ function App(){
 
     const selectLine = (id, move) => {
         if ( move ) vidRef.current.currentTime = subtitles[id].data.start/1000;
-        console.log(`selected id change!!!! for ${id}`)
         setSelectedId(id)
     }
 
@@ -63,6 +98,18 @@ function App(){
 
 
     }
+
+    useEffect(()=>{
+
+        fetch(totalIndiferenciaMp4)
+        .then(r => r.blob())
+        .then(blob => loadVideo(blob))
+
+        fetch(totalIndiferenciaSTR)
+        .then(r => r.text())
+        .then(str => loadSubtitles(str))
+
+    }, [])
 
     return (
         <div className='grid-container'>
