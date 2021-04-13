@@ -93,13 +93,19 @@ const Timeline = props => {
     const reconsiliateOrder = k => {
         let subs = [...props.subtitles]
         //subs.sort((a,b)=>a.data.start>b.data.start)
-        let mapped = subs.map((sub, i)=>{return {index: i, sub: sub}})
-        mapped.sort( (a,b) => a.sub.data.start > b.sub.data.start )
+        // chrome fix: https://forum.freecodecamp.org/t/the-sort-method-behaves-different-on-different-browsers/237221
+        let mapped = subs
+            .map((sub, i)=>{return {index: i, sub: sub}})
+            .sort( (a,b) =>{return a.sub.data.start > b.sub.data.start ? 1 : -1})
+
         let newId = props.sID
         let result = mapped.map((s, i)=>{
             if (s.index == k) newId = i;
             return subs[s.index];
         })
+
+        console.log(subs, mapped, result)
+
         props.select(newId, false)
         props.edit(result)
     }

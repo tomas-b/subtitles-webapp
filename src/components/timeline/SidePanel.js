@@ -5,8 +5,6 @@ const inputToMs = time => (new Date(`1970-01-01T${time}Z`)).getTime()
 
 const SidePanel = props => {
 
-    console.log(props.timelineActive)
-
     if(!props.timelineActive) return(<div className='side-panel'></div>)
 
     const handleEdit = (k, v = null) => {
