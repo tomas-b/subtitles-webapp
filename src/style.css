@@ -274,6 +274,7 @@ input, textarea {
 .canvas-wrapper::-webkit-scrollbar-thumb {background: grey}
 
 #boxes {
+    height: 100%;
     min-width: 100%;
     position: absolute;
     z-index:2;
@@ -282,7 +283,7 @@ input, textarea {
 .box {
     display: inline-flex;
     z-index:3;
-    height:195px;
+    height:100%;
     position:absolute;
     background:rgba(255,0,0,.2);
     border-right:1px solid black;
@@ -323,4 +324,3 @@ input, textarea {
     opacity: .5;
     text-align: right;
 }
-
