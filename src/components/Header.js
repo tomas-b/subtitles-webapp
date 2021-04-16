@@ -22,11 +22,11 @@ const Header = props => {
         <ul id='menu'>
             <li>
             <input onChange={handleVideo} type='file' id='file' name='file'/>
-            <label htmlFor='file'>Choose Video</label>
+            <label htmlFor='file'>Open Video</label>
             </li>
             <li>
             <input onChange={handleSubtitles} type='file' id='subs_file' name='subs_file'/>
-            <label htmlFor='subs_file'>Choose Subtitle</label>
+            <label htmlFor='subs_file'>Open Subtitle</label>
             </li>
             <li>
             <input id='save_str' onClick={()=>props.handleSave(vidFileName)}/>
