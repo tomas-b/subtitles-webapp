@@ -71,6 +71,7 @@ input, textarea {
 }
 
 .subtitles {
+    overflow: hidden;
     grid-area: subtitles;
     background:#333;
     color:white;
