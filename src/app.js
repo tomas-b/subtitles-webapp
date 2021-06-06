@@ -6,8 +6,8 @@ import ListEditor   from './components/ListEditor'
 import Video        from './components/Video'
 import Timeline     from './components/timeline/Timeline'
 import './style.css'
-import totalIndiferenciaMp4 from '../demo_files/total_indiferencia.mp4'
-import totalIndiferenciaSTR from '../demo_files/subtitle.str'
+import totalIndiferenciaMp4 from 'url:../demo_files/total_indiferencia.mp4'
+import totalIndiferenciaSTR from 'url:../demo_files/subtitle.str'
 
 function App(){
 
